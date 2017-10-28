@@ -13,7 +13,7 @@ function watchForRestart {
 tail --retry -F -n 0 /var/log/srcds/tf2.log |\
     while read line; do
 	if echo "$line" | grep -E -q 'Your server needs to be restarted in order to receive the latest update.'; then
-	    echo Trying to restart server!
+	    echo $(date) Trying to restart server! >> /var/log/srcds/restart-tf2.log
 	    screen -S $screenID -X quit
 	    startTF2
 	    screen -r $screenID
