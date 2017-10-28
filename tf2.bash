@@ -14,7 +14,7 @@ tail --retry -F -n 0 /var/log/srcds/tf2.log |\
     while read line; do
 	if echo "$line" | grep -E -q 'Your server needs to be restarted in order to receive the latest update.'; then
 	    echo $(date) Trying to restart server! >> /var/log/srcds/restart-tf2.log
-	    screen -S $screenID -X quit
+	    screen -ls | awk -vFS='\t|[.]' '/'$screenID'/ {system("screen -S "$2" -X quit")}'
 	    startTF2
 	    screen -r $screenID
 	fi
